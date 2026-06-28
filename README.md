@@ -115,13 +115,19 @@ cd server
 npm install
 ```
 
-Edit the `.env` file to configure your MongoDB connection:
+Copy `.env.example` to `.env` and fill in your MongoDB connection:
+
+```bash
+cp .env.example .env
+```
 
 ```env
-PORT=5000
+PORT=5001
 MONGO_URI=mongodb://localhost:27017/todo-db
 NODE_ENV=development
 ```
+
+> ⚠️ **Never commit `.env`** — it is already listed in `.gitignore`.
 
 ---
 
@@ -146,7 +152,7 @@ npm run dev      # Uses nodemon for hot-reload
 npm start        # Production start
 ```
 
-The API will run at: **http://localhost:5000**
+The API will run at: **http://localhost:5001**
 
 ### Start the Frontend
 
@@ -157,6 +163,35 @@ npm run dev
 ```
 
 The app will run at: **http://localhost:5173**
+
+---
+
+## 🐳 Run with Docker
+
+The easiest way to run the full stack locally — no manual MongoDB or Node.js setup required.
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+- A MongoDB URI (Atlas or local) configured in `server/.env`
+
+### Start Everything
+
+```bash
+# From the project root
+docker compose up --build
+```
+
+| Service  | URL                          |
+|----------|------------------------------|
+| Frontend | http://localhost:5173        |
+| Backend  | http://localhost:5001/api    |
+
+### Stop Everything
+
+```bash
+docker compose down
+```
 
 ---
 
@@ -172,7 +207,7 @@ The app will run at: **http://localhost:5173**
 ## 🧪 API Health Check
 
 ```
-GET http://localhost:5000/api/health
+GET http://localhost:5001/api/health
 ```
 
 Response:

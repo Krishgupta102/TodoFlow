@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  # ─── Backend API (Express + Node.js) ─────────────────────────────────────────
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: todoflow-server
+    restart: unless-stopped
+    ports:
+      - '5001:5001'
+    environment:
+      - PORT=5001
+      - NODE_ENV=production
+      - MONGO_URI=${MONGO_URI}
+    env_file:
+      - ./server/.env
+    networks:
+      - todoflow-network
+
+  # ─── Frontend (React + Vite → nginx) ─────────────────────────────────────────
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: todoflow-client
+    restart: unless-stopped
+    ports:
+      - '5173:80'
+    depends_on:
+      - server
+    networks:
+      - todoflow-network
+
+# ─── Shared Network ───────────────────────────────────────────────────────────
+networks:
+  todoflow-network:
+    driver: bridge
