@@ -1,40 +1,44 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  # ─── Backend API (Express + Node.js) ─────────────────────────────────────────
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: todoflow-server
+      target: production
     restart: unless-stopped
+
     ports:
-      - '5001:5001'
-    environment:
-      - PORT=5001
-      - NODE_ENV=production
+      - "5001:5001"
+
     env_file:
       - ./server/.env
+
+    environment:
+      NODE_ENV: production
+
     networks:
       - todoflow-network
 
-  # ─── Frontend (React + Vite → nginx) ─────────────────────────────────────────
   client:
     build:
       context: ./client
       dockerfile: Dockerfile
+      target: production
       args:
-        - VITE_API_URL=/api
-    container_name: todoflow-client
+        VITE_API_URL: http://localhost:5001/api
+
     restart: unless-stopped
+
     ports:
-      - '5173:80'
+      - "5173:80"
+
     depends_on:
       - server
+
     networks:
       - todoflow-network
 
-# ─── Shared Network ───────────────────────────────────────────────────────────
 networks:
   todoflow-network:
     driver: bridge
