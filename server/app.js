@@ -8,9 +8,13 @@ const app = express();
 // CORS configuration — allow requests from Vite dev server
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://todo-flow-omega.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
