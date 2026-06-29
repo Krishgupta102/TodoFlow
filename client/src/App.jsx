@@ -1,12 +1,13 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import LandingPage from './pages/LandingPage';
 import TodosPage from './pages/TodosPage';
 import TodoDetailPage from './pages/TodoDetailPage';
 
 /**
  * Root application component.
  * Configures React Router with multi-page routing:
- *  - /        → redirects to /todos
+ *  - /        → Landing / home page
  *  - /todos   → Main todos dashboard
  *  - /todo?id → Single todo detail view
  *  - *        → 404 fallback
@@ -18,8 +19,8 @@ function App() {
         <Navbar />
         <div className="flex-1">
           <Routes>
-            {/* Redirect root to /todos */}
-            <Route path="/" element={<Navigate to="/todos" replace />} />
+            {/* Landing page */}
+            <Route path="/" element={<LandingPage />} />
 
             {/* Main todos dashboard */}
             <Route path="/todos" element={<TodosPage />} />
